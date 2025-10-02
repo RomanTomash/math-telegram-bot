@@ -1,6 +1,6 @@
-name: telegram-math-bot
+name: math-telegram-bot
 platform: python
-subdomain: bot-math
+subdomain: math-bot
 
 build:
   type: pip
@@ -15,3 +15,4 @@ resources:
 
 env:
   BOT_TOKEN: ${BOT_TOKEN}
+  ADMIN_IDS: ${ADMIN_IDS}
