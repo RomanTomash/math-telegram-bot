@@ -1,34 +1,32 @@
 import os
-import time
+import logging
+from telegram import Update
+from telegram.ext import Application, CommandHandler, ContextTypes
 
-print("=== ENVIRONMENT DEBUG ===")
-print("Waiting 10 seconds for environment to load...")
-time.sleep(10)
-
-print("All environment variables:")
-for key, value in os.environ.items():
-    if 'BOT' in key or 'TOKEN' in key or 'ADMIN' in key:
-        print(f"  {key}: {value}")
-
+# Переменные уже установлены в панели
 BOT_TOKEN = os.getenv('BOT_TOKEN')
-print(f"BOT_TOKEN: {BOT_TOKEN}")
+ADMIN_IDS = os.getenv('ADMIN_IDS')
 
-if BOT_TOKEN:
-    print("✅ BOT_TOKEN is SET! Starting bot...")
-    import logging
-    from telegram import Update
-    from telegram.ext import Application, CommandHandler, ContextTypes
-    
-    logging.basicConfig(level=logging.INFO)
-    
-    async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        await update.message.reply_text('✅ Бот работает на Amvera!')
-    
+print("=== BOT STARTING ===")
+print(f"BOT_TOKEN from env: {'✅ SET' if BOT_TOKEN else '❌ NOT SET'}")
+print(f"ADMIN_IDS from env: {ADMIN_IDS}")
+
+if not BOT_TOKEN:
+    print("❌ FATAL: BOT_TOKEN not in environment!")
+    print("💡 Even though it's set in panel, it's not reaching the container")
+    exit(1)
+
+logging.basicConfig(level=logging.INFO)
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text('🎉 Бот работает на Amvera!')
+
+try:
     application = Application.builder().token(BOT_TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     print("🤖 Bot starting polling...")
     application.run_polling()
-else:
-    print("❌ BOT_TOKEN is NOT SET in environment!")
-    print("Sleeping for 5 minutes to see logs...")
-    time.sleep(300)
+except Exception as e:
+    print(f"❌ Bot error: {e}")
+    import traceback
+    traceback.print_exc()
