@@ -1,0 +1,17 @@
+name: telegram-math-bot
+platform: python
+subdomain: bot-math
+
+build:
+  type: pip
+
+run:
+  command: python main.py
+  web: true
+
+resources:
+  memory: 512
+  cpu: 1000
+
+env:
+  BOT_TOKEN: ${BOT_TOKEN}
