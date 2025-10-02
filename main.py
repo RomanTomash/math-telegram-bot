@@ -2047,4 +2047,31 @@ def main():
         print(f"❌ Ошибка запуска бота: {e}")
 
 if __name__ == '__main__':
-    main()
+    try:
+        print("🚀 Starting Telegram Bot...")
+        print("=== BOT STARTUP CHECK ===")
+        import sys
+        print(f"Python version: {sys.version}")
+        print(f"Current directory: {os.getcwd()}")
+        print(f"Files in directory: {os.listdir('.')}")
+        
+        # Проверяем базу данных
+        try:
+            db_test = SimpleDB()
+            print("✅ Database initialized successfully")
+        except Exception as e:
+            print(f"❌ Database error: {e}")
+            import traceback
+            traceback.print_exc()
+        
+        # Запускаем основную функцию
+        main()
+        
+    except Exception as e:
+        print(f"❌ CRITICAL ERROR: {e}")
+        print("📋 Error details:")
+        import traceback
+        traceback.print_exc()
+        # Ждем перед выходом чтобы увидеть ошибку в логах
+        import time
+        time.sleep(30)
