@@ -1,17 +1,13 @@
-name: telegram-math-bot
-platform: python
-subdomain: bot-math
-
+---
+version: null
+meta:
+  environment: docker
+  toolchain:
+    name: docker
+    version: latest
 build:
-  type: pip
-
+  dockerfile: Dockerfile
+  skip: false
 run:
   command: python main.py
-  web: true
-
-resources:
-  memory: 512
-  cpu: 1000
-
-env:
-  BOT_TOKEN: ${BOT_TOKEN}
+  containerPort: 8080
