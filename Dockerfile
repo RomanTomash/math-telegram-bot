@@ -7,5 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Запускаем тест вместо бота
-CMD ["python", "test.py"]
+RUN useradd -m -u 1000 botuser
+USER botuser
+
+CMD ["python", "main.py"]
