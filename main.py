@@ -1,20 +1,20 @@
 import os
 import logging
-import asyncio
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
 # Настройка
 BOT_TOKEN = os.getenv('BOT_TOKEN')
-ADMIN_IDS = os.getenv('ADMIN_IDS', '452601108')
+ADMIN_IDS = os.getenv('ADMIN_IDS')
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
 
-print("=== BOT STARTUP ===")
-print(f"BOT_TOKEN: {'SET' if BOT_TOKEN else 'NOT SET'}")
+print("=== BOT STARTUP DEBUG ===")
+print(f"All environment variables: {dict(os.environ)}")
+print(f"BOT_TOKEN: {BOT_TOKEN}")
 print(f"ADMIN_IDS: {ADMIN_IDS}")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -24,8 +24,7 @@ def main():
     print("🚀 Starting Telegram Bot...")
     
     if not BOT_TOKEN:
-        print("❌ BOT_TOKEN is not set in environment variables!")
-        print("💡 Set BOT_TOKEN in Amvera panel → Environment Variables")
+        print("❌ BOT_TOKEN is still not set!")
         return
     
     try:
